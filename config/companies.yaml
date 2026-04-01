@@ -1,0 +1,800 @@
+# ─────────────────────────────────────────────────────────────────
+# companies.yaml
+# Each entry:
+#   name:        human-readable company name
+#   board_token: ATS slug used in API URL
+#   priority:    1 (highest) → 3 (lowest)  — used in scoring
+#   notes:       optional freetext
+# ─────────────────────────────────────────────────────────────────
+
+greenhouse:
+
+  # ── Asset Managers / PE / Credit ─────────────────────────────
+  - name: Blackstone
+    board_token: blackstone
+    priority: 1
+
+  - name: KKR
+    board_token: kkr
+    priority: 1
+
+  - name: Apollo Global Management
+    board_token: apolloglobalmanagement
+    priority: 1
+
+  - name: Carlyle Group
+    board_token: thecarlylegroup
+    priority: 1
+
+  - name: Ares Management
+    board_token: aresmanagement
+    priority: 1
+
+  - name: Blue Owl Capital
+    board_token: blueowlcapital
+    priority: 1
+
+  - name: Sixth Street
+    board_token: sixthstreet
+    priority: 1
+
+  - name: Warburg Pincus
+    board_token: warburgpincus
+    priority: 1
+
+  - name: General Atlantic
+    board_token: generalatlantic
+    priority: 1
+
+  - name: Brookfield Asset Management
+    board_token: brookfieldassetmanagement
+    priority: 1
+
+  - name: Vista Equity Partners
+    board_token: vistaequitypartners
+    priority: 1
+
+  # ── Banks / Financial Services ────────────────────────────────
+  - name: Goldman Sachs
+    board_token: gs
+    priority: 1
+
+  - name: Morgan Stanley
+    board_token: morganstanley
+    priority: 1
+
+  - name: Citigroup
+    board_token: citigroup
+    priority: 1
+
+  - name: JPMorgan Chase
+    board_token: jpmorganchase
+    priority: 1
+
+  - name: Barclays
+    board_token: barclays
+    priority: 1
+
+  - name: Deutsche Bank
+    board_token: deutschebank
+    priority: 1
+
+  - name: BNP Paribas
+    board_token: bnpparibas
+    priority: 1
+
+  - name: HSBC
+    board_token: hsbc
+    priority: 2
+
+  - name: Societe Generale
+    board_token: societegenerale
+    priority: 2
+
+  - name: Nomura
+    board_token: nomura
+    priority: 2
+
+  # ── Data / Ratings / Financial Info ──────────────────────────
+  - name: S&P Global
+    board_token: sandpglobal
+    priority: 1
+
+  - name: Moody's Corporation
+    board_token: moodys
+    priority: 1
+
+  - name: MSCI
+    board_token: msci
+    priority: 1
+
+  - name: FactSet Research Systems
+    board_token: factset
+    priority: 2
+
+  - name: Intercontinental Exchange
+    board_token: intercontinentalexchange
+    priority: 2
+
+  - name: Broadridge Financial Solutions
+    board_token: broadridge
+    priority: 2
+
+  - name: Dun & Bradstreet
+    board_token: dunbradstreet
+    priority: 2
+
+  # ── Tech / SaaS (NYC-heavy, active FP&A hiring) ───────────────
+  - name: Spotify
+    board_token: spotify
+    priority: 1
+
+  - name: Ramp
+    board_token: ramp
+    priority: 1
+    notes: fintech, strong FP&A culture
+
+  - name: Brex
+    board_token: brex
+    priority: 2
+
+  - name: Navan
+    board_token: navan
+    priority: 2
+
+  - name: MongoDB
+    board_token: mongodb
+    priority: 2
+
+  - name: Datadog
+    board_token: datadog
+    priority: 2
+
+  - name: UiPath
+    board_token: uipath
+    priority: 2
+
+  - name: Samsara
+    board_token: samsara
+    priority: 2
+
+  - name: DoubleVerify
+    board_token: doubleverify
+    priority: 2
+
+  - name: Integral Ad Science
+    board_token: integraladscience
+    priority: 2
+
+  - name: Squarespace
+    board_token: squarespace
+    priority: 2
+
+  - name: Etsy
+    board_token: etsy
+    priority: 2
+
+  - name: Peloton
+    board_token: peloton
+    priority: 2
+
+  - name: Vimeo
+    board_token: vimeo
+    priority: 2
+
+  - name: Yext
+    board_token: yext
+    priority: 2
+
+  - name: Shutterstock
+    board_token: shutterstock
+    priority: 2
+
+  - name: Dotdash Meredith
+    board_token: dotdashmeredith
+    priority: 2
+
+  - name: IAC
+    board_token: iac
+    priority: 2
+
+  - name: Nielsen
+    board_token: nielsen
+    priority: 2
+
+  - name: Compass
+    board_token: compass
+    priority: 2
+    notes: real estate tech, NYC HQ
+
+  # ── Real Estate / Infrastructure ──────────────────────────────
+  - name: CBRE
+    board_token: cbre
+    priority: 2
+
+  - name: JLL
+    board_token: jll
+    priority: 2
+
+  - name: Vornado Realty
+    board_token: vornado
+    priority: 2
+
+  # ── Healthcare / Pharma (NYC presence) ───────────────────────
+  - name: Oscar Health
+    board_token: oscarhealth
+    priority: 2
+
+  - name: Cityblock Health
+    board_token: cityblock
+    priority: 2
+
+  - name: Pfizer
+    board_token: pfizer
+    priority: 3
+
+  - name: Bristol Myers Squibb
+    board_token: bristolmyerssquibb
+    priority: 3
+
+  # ── Fintech / Payments (expanded) ────────────────────────────
+  - name: Robinhood
+    board_token: robinhood
+    priority: 1
+    notes: fintech, strong finance org
+
+  - name: Coinbase
+    board_token: coinbase
+    priority: 2
+    notes: crypto exchange, NYC presence
+
+  - name: Affirm
+    board_token: affirm
+    priority: 2
+
+  - name: SoFi
+    board_token: sofi
+    priority: 2
+
+  - name: Marqeta
+    board_token: marqeta
+    priority: 2
+
+  - name: Betterment
+    board_token: betterment
+    priority: 2
+    notes: NYC-based robo-advisor
+
+  - name: Carta
+    board_token: carta
+    priority: 2
+    notes: equity management platform
+
+  - name: Payoneer
+    board_token: payoneer
+    priority: 2
+    notes: NYC HQ, global payments
+
+  - name: Flywire
+    board_token: flywire
+    priority: 2
+
+  - name: NerdWallet
+    board_token: nerdwallet
+    priority: 2
+
+  - name: Klarna
+    board_token: klarna
+    priority: 2
+
+  - name: Toast
+    board_token: toasttab
+    priority: 2
+    notes: restaurant fintech
+
+  - name: Adyen
+    board_token: adyen
+    priority: 2
+
+  - name: Paxos
+    board_token: paxos
+    priority: 2
+    notes: NYC-based blockchain/fintech
+
+  - name: Blend Labs
+    board_token: blend
+    priority: 2
+    notes: mortgage/lending fintech
+
+  - name: Chainalysis
+    board_token: chainalysis
+    priority: 2
+    notes: NYC-based crypto analytics
+
+  - name: Lemonade
+    board_token: lemonade
+    priority: 2
+    notes: NYC HQ insurtech
+
+  - name: Justworks
+    board_token: justworks
+    priority: 2
+    notes: NYC HQ HR/payroll platform
+
+  # ── Investment Banking / Advisory (expanded) ──────────────────
+  - name: AllianceBernstein
+    board_token: alliancebernstein
+    priority: 1
+    notes: NYC-based asset manager
+
+  - name: Neuberger Berman
+    board_token: neubergerberman
+    priority: 1
+    notes: NYC HQ asset manager
+
+  - name: Lazard
+    board_token: lazard
+    priority: 1
+    notes: NYC HQ M&A / asset management
+
+  - name: Evercore
+    board_token: evercore
+    priority: 1
+    notes: NYC HQ advisory
+
+  - name: Houlihan Lokey
+    board_token: houlihanlokey
+    priority: 2
+
+  - name: PJT Partners
+    board_token: pjtpartners
+    priority: 1
+    notes: NYC HQ boutique advisory
+
+  - name: Moelis & Company
+    board_token: moelis
+    priority: 2
+    notes: NYC HQ boutique advisory
+
+  - name: Invesco
+    board_token: invesco
+    priority: 2
+
+  # ── Ad Tech / Media / Client Finance ─────────────────────────
+  - name: The Trade Desk
+    board_token: thetradedesk
+    priority: 2
+    notes: programmatic ad platform
+
+  - name: Taboola
+    board_token: taboola
+    priority: 2
+    notes: NYC HQ content discovery
+
+  - name: Magnite
+    board_token: magnite
+    priority: 2
+    notes: NYC-based SSP
+
+  - name: Criteo
+    board_token: criteo
+    priority: 2
+
+  - name: Zeta Global
+    board_token: zetaglobal
+    priority: 2
+    notes: NYC HQ marketing cloud
+
+  - name: Dow Jones
+    board_token: dowjones
+    priority: 2
+    notes: NYC HQ financial media
+
+  - name: Forbes
+    board_token: forbes
+    priority: 3
+    notes: NYC HQ media
+
+  - name: Rokt
+    board_token: rokt
+    priority: 2
+    notes: NYC HQ e-commerce marketing
+
+  # ── Healthcare Tech (expanded) ────────────────────────────────
+  - name: Zocdoc
+    board_token: zocdoc
+    priority: 2
+    notes: NYC HQ health tech
+
+  - name: Spring Health
+    board_token: springhealth
+    priority: 2
+    notes: NYC HQ mental health platform
+
+  - name: Ro
+    board_token: ro
+    priority: 2
+    notes: NYC HQ telehealth
+
+  - name: Cedar
+    board_token: cedar
+    priority: 2
+    notes: NYC HQ healthcare billing tech
+
+  - name: Hinge Health
+    board_token: hingehealth
+    priority: 2
+
+  - name: Flatiron Health
+    board_token: flatironhealth
+    priority: 2
+    notes: NYC HQ oncology tech (Roche)
+
+  - name: Quartet Health
+    board_token: quartethealth
+    priority: 3
+    notes: NYC HQ behavioral health
+
+  - name: Nuvation Bio
+    board_token: nuvationbio
+    priority: 3
+    notes: NYC-based biotech
+
+  # ── E-commerce / Consumer Internet ───────────────────────────
+  - name: Wayfair
+    board_token: wayfair
+    priority: 2
+
+  - name: 1stDibs
+    board_token: 1stdibs
+    priority: 2
+    notes: NYC HQ luxury marketplace
+
+  - name: Warby Parker
+    board_token: warbyparker
+    priority: 2
+    notes: NYC HQ DTC eyewear
+
+  - name: Glossier
+    board_token: glossier
+    priority: 2
+    notes: NYC HQ DTC beauty
+
+  - name: Allbirds
+    board_token: allbirds
+    priority: 3
+
+  - name: Harry's
+    board_token: harrys
+    priority: 2
+    notes: NYC HQ DTC grooming
+
+  - name: Rent the Runway
+    board_token: renttherunway
+    priority: 2
+    notes: NYC HQ fashion rental
+
+  - name: StockX
+    board_token: stockx
+    priority: 2
+    notes: sneaker/collectibles marketplace
+
+  - name: ThredUp
+    board_token: thredup
+    priority: 3
+
+  - name: Brilliant Earth
+    board_token: brilliantearth
+    priority: 3
+
+  - name: Sweetgreen
+    board_token: sweetgreen
+    priority: 3
+    notes: NYC presence, fast-casual
+
+  # ── Growth SaaS / NYC-based Tech ──────────────────────────────
+  - name: Braze
+    board_token: braze
+    priority: 2
+    notes: NYC HQ customer engagement SaaS
+
+  - name: Attentive
+    board_token: attentive
+    priority: 2
+    notes: NYC HQ SMS marketing SaaS
+
+  - name: Movable Ink
+    board_token: movableink
+    priority: 2
+    notes: NYC HQ marketing personalization
+
+  - name: Bluecore
+    board_token: bluecore
+    priority: 3
+    notes: NYC HQ retail marketing SaaS
+
+  - name: Klaviyo
+    board_token: klaviyo
+    priority: 2
+    notes: e-commerce marketing automation
+
+  - name: Miro
+    board_token: miro
+    priority: 2
+    notes: NYC presence, collaboration SaaS
+
+  - name: WeWork
+    board_token: wework
+    priority: 3
+    notes: NYC HQ
+
+  - name: Opendoor
+    board_token: opendoor
+    priority: 2
+    notes: real estate tech
+
+  # ── Financial Data / Reporting SaaS ──────────────────────────
+  - name: Workiva
+    board_token: workiva
+    priority: 2
+    notes: financial reporting / compliance SaaS
+
+  - name: Tipalti
+    board_token: tipalti
+    priority: 2
+    notes: AP automation
+
+  - name: Coupa Software
+    board_token: coupa
+    priority: 2
+    notes: spend management
+
+  - name: Pave
+    board_token: pave
+    priority: 2
+    notes: NYC HQ compensation analytics
+
+  - name: Mosaic
+    board_token: mosaic
+    priority: 2
+    notes: strategic finance SaaS
+
+  - name: Verisk Analytics
+    board_token: verisk
+    priority: 2
+    notes: NYC HQ data analytics
+
+lever:
+
+  # ── Quant / Hedge Funds ───────────────────────────────────────
+  - name: Two Sigma
+    board_token: twosigma
+    priority: 1
+
+  - name: Point72 Asset Management
+    board_token: point72
+    priority: 1
+
+  - name: Coatue Management
+    board_token: coatue
+    priority: 1
+
+  - name: Tiger Global Management
+    board_token: tigerglobal
+    priority: 1
+
+  # ── Fintech / Payments ────────────────────────────────────────
+  - name: Stripe
+    board_token: stripe
+    priority: 1
+
+  - name: Plaid
+    board_token: plaid
+    priority: 1
+
+  - name: Chime
+    board_token: chime
+    priority: 2
+
+  - name: Gemini
+    board_token: gemini
+    priority: 2
+
+  - name: Upgrade
+    board_token: upgrade
+    priority: 2
+
+  # ── Tech / SaaS ───────────────────────────────────────────────
+  - name: Figma
+    board_token: figma
+    priority: 2
+
+  - name: Notion
+    board_token: notion
+    priority: 2
+
+  - name: Airtable
+    board_token: airtable
+    priority: 2
+
+  - name: Amplitude
+    board_token: amplitude
+    priority: 2
+
+  - name: Lattice
+    board_token: lattice
+    priority: 2
+
+  - name: Cockroach Labs
+    board_token: cockroachlabs
+    priority: 2
+
+  - name: Scale AI
+    board_token: scaleai
+    priority: 2
+
+  - name: Cohere
+    board_token: cohere
+    priority: 2
+
+  - name: Perplexity AI
+    board_token: perplexityai
+    priority: 2
+
+  - name: Verkada
+    board_token: verkada
+    priority: 2
+
+  - name: Harness
+    board_token: harness
+    priority: 2
+
+  # ── Media / Publishing ────────────────────────────────────────
+  - name: Condé Nast
+    board_token: condenast
+    priority: 2
+
+  - name: Hearst
+    board_token: hearst
+    priority: 2
+
+  # ── Travel / Hospitality ──────────────────────────────────────
+  - name: Airbnb
+    board_token: airbnb
+    priority: 2
+
+  - name: Booking Holdings
+    board_token: bookingholdings
+    priority: 2
+
+  - name: Priceline
+    board_token: priceline
+    priority: 2
+
+  # ── Fintech / Payments (expanded) ────────────────────────────
+  - name: Mercury
+    board_token: mercury
+    priority: 1
+    notes: fintech banking, strong finance function
+
+  - name: Rippling
+    board_token: rippling
+    priority: 2
+    notes: HR/payroll platform, active FP&A hiring
+
+  - name: Modern Treasury
+    board_token: moderntreasury
+    priority: 2
+    notes: NYC HQ payment operations SaaS
+
+  - name: Pilot
+    board_token: pilot
+    priority: 2
+    notes: finance-as-a-service for startups
+
+  - name: Unit Finance
+    board_token: unit
+    priority: 2
+    notes: embedded banking infrastructure
+
+  - name: Lithic
+    board_token: lithic
+    priority: 2
+    notes: card issuing fintech
+
+  - name: Deel
+    board_token: deel
+    priority: 2
+    notes: global payroll/HR platform
+
+  - name: Remote
+    board_token: remote
+    priority: 2
+    notes: global employment platform
+
+  - name: Rutter
+    board_token: rutter
+    priority: 3
+    notes: fintech API aggregator
+
+  - name: Payhawk
+    board_token: payhawk
+    priority: 3
+    notes: spend management
+
+  # ── Tech / SaaS (expanded) ────────────────────────────────────
+  - name: Retool
+    board_token: retool
+    priority: 2
+    notes: internal tools platform
+
+  - name: Iterable
+    board_token: iterable
+    priority: 2
+    notes: marketing automation SaaS
+
+  - name: Gorgias
+    board_token: gorgias
+    priority: 3
+    notes: NYC HQ e-commerce CX platform
+
+  - name: Weights & Biases
+    board_token: wandb
+    priority: 2
+    notes: ML platform
+
+  - name: Ironclad
+    board_token: ironclad
+    priority: 2
+    notes: contract management SaaS
+
+  - name: Clearbit
+    board_token: clearbit
+    priority: 3
+    notes: B2B data enrichment
+
+  - name: AngelList
+    board_token: angellist
+    priority: 2
+    notes: NYC HQ startup investing platform
+
+  - name: Replit
+    board_token: replit
+    priority: 2
+
+  # ── Healthcare Tech (expanded) ────────────────────────────────
+  - name: Hims & Hers
+    board_token: hims
+    priority: 2
+    notes: telehealth DTC
+
+  - name: Noom
+    board_token: noom
+    priority: 2
+    notes: NYC HQ digital health
+
+  - name: Headspace Health
+    board_token: headspace
+    priority: 3
+
+  # ── E-commerce / Consumer ─────────────────────────────────────
+  - name: Poshmark
+    board_token: poshmark
+    priority: 2
+    notes: social commerce marketplace
+
+  - name: Bonobos
+    board_token: bonobos
+    priority: 3
+    notes: NYC HQ DTC menswear
+
+  # ── Media / Publishing ────────────────────────────────────────
+  - name: Vox Media
+    board_token: voxmedia
+    priority: 2
+    notes: NYC HQ digital media
+
+  - name: BuzzFeed
+    board_token: buzzfeed
+    priority: 3
+    notes: NYC HQ digital media

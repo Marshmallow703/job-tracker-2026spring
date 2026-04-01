@@ -1,0 +1,67 @@
+# ─────────────────────────────────────────────────────────────────
+# .github/workflows/daily.yml
+#
+# Daily job scraping — runs at 08:00 UTC (4:00 AM ET)
+# Also triggerable manually via workflow_dispatch.
+#
+# Required GitHub Secrets:
+#   GOOGLE_CREDENTIALS_JSON   full contents of service account JSON key
+#   GOOGLE_SPREADSHEET_ID     the 44-char spreadsheet ID
+# ─────────────────────────────────────────────────────────────────
+
+name: Daily Job Fetch
+
+on:
+  schedule:
+    - cron: "0 8 * * *"      # 08:00 UTC = 04:00 ET (03:00 EDT)
+  workflow_dispatch:          # manual trigger from Actions tab
+    inputs:
+      dry_run:
+        description: "Dry run (fetch but don't write to sheet)"
+        required: false
+        default: "false"
+        type: choice
+        options: ["true", "false"]
+
+jobs:
+  fetch-jobs:
+    name: Fetch & Append Jobs
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      # ── 1. Checkout ────────────────────────────────────────────
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ── 2. Python setup ────────────────────────────────────────
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      # ── 3. Install dependencies ────────────────────────────────
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # ── 4. Write credentials to temp file ─────────────────────
+      - name: Write Google credentials
+        run: |
+          echo '${{ secrets.GOOGLE_CREDENTIALS_JSON }}' > /tmp/google_creds.json
+          echo "GOOGLE_CREDENTIALS_PATH=/tmp/google_creds.json" >> $GITHUB_ENV
+
+      # ── 5. Run the tracker ─────────────────────────────────────
+      - name: Run job tracker
+        env:
+          GOOGLE_SPREADSHEET_ID: ${{ secrets.GOOGLE_SPREADSHEET_ID }}
+          DRY_RUN: ${{ github.event.inputs.dry_run == 'true' && '1' || '0' }}
+          LOG_LEVEL: INFO
+        run: |
+          cd src
+          python main.py
+
+      # ── 6. Clean up credentials ────────────────────────────────
+      - name: Remove credentials file
+        if: always()
+        run: rm -f /tmp/google_creds.json

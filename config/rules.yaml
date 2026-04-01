@@ -1,0 +1,229 @@
+# ─────────────────────────────────────────────────────────────────
+# rules.yaml  —  centralised filter + scoring configuration
+# Edit here first before touching any Python.
+# ─────────────────────────────────────────────────────────────────
+
+# ── Target job titles ─────────────────────────────────────────────
+# Regex fragments matched case-insensitively against the full title.
+# A job passes if ANY pattern matches.
+target_title_patterns:
+  - "fp&a"
+  - "fp & a"
+  - "financial planning"
+  - "financial analyst"
+  - "finance analyst"
+  - "strategic finance"
+  - "business finance"
+  - "commercial finance"
+  - "corporate finance"
+  - "revenue finance"
+  - "finance operations"
+  - "client finance"
+  - "finance associate"
+  - "planning.{0,20}analyst"         # "planning & analysis analyst" etc.
+  - "\\bfpa\\b"
+  - "\\banalyst\\b.{0,10}finance"    # "Analyst, Finance"
+  - "corporate planning"
+  - "revenue operations"
+  - "reporting analyst"
+  - "commercial analyst"
+  - "pricing analyst"
+  - "strategy.{0,10}operations.{0,10}analyst"
+  - "business operations analyst"
+
+# Title scoring weights (additive; capped at 40 in score.py)
+title_score:
+  exact_target: 40          # title is a direct target title
+  partial_target: 25        # title contains a target keyword
+  adjacent: 10              # "operations analyst", "business analyst" etc.
+
+# ── Title exclusions ─────────────────────────────────────────────
+# If ANY pattern below matches the title → job is dropped.
+title_exclude_patterns:
+  - "\\bsenior\\b"
+  - "\\bsr\\.?\\b"
+  - "\\blead\\b"
+  - "\\bmanager\\b"
+  - "\\bdirector\\b"
+  - "\\bvp\\b"
+  - "\\bvice president\\b"
+  - "\\bhead of\\b"
+  - "\\bprincipal\\b"
+  - "\\bstaff\\b"
+  - "accounting"
+  - "\\bcontroller\\b"
+  - "\\btax\\b"
+  - "\\baudit\\b"
+  - "\\baccountant\\b"
+  - "payroll"
+  - "accounts payable"
+  - "accounts receivable"
+  - "bookkeeping"
+
+# ── Location matching ─────────────────────────────────────────────
+# Job passes if location contains ANY of these (case-insensitive).
+# Missing location = keep for manual review.
+# Jobs with a non-empty location matching NONE of these are dropped
+# (fetchers return False at end of _location_ok for unknown locations).
+location_include:
+  # NYC metro
+  - "new york"
+  - "nyc"
+  - "ny,"          # catches "Brooklyn, NY" patterns
+  - ", ny"         # catches "New York, NY"
+  - "ny "
+  - "manhattan"
+  - "brooklyn"
+  - "queens"
+  - "bronx"
+  - "hoboken"
+  - "jersey city"
+  # Broader US cities / state abbreviations
+  - "united states"
+  - "usa"
+  - "u.s.a"
+  - "u.s."
+  - ", ca"
+  - ", tx"
+  - ", wa"
+  - ", il"
+  - ", ma"
+  - ", ga"
+  - ", co"
+  - ", fl"
+  - ", pa"
+  - ", va"
+  - ", nc"
+  - ", az"
+  - "san francisco"
+  - "seattle"
+  - "austin"
+  - "chicago"
+  - "boston"
+  - "los angeles"
+  - "denver"
+  - "atlanta"
+  - "dallas"
+  - "miami"
+  - "washington, d.c"
+  - "washington dc"
+  - "philadelphia"
+  # Remote/hybrid — non-US remote is caught by location_exclude_strict below
+  - "remote"
+  - "hybrid"
+
+# Drop if location contains any of these and no location_include match.
+# Non-US locations only — US cities moved to location_include above.
+location_exclude_strict:
+  # UK / Europe
+  - "london"
+  - "united kingdom"
+  - " uk"
+  - "england"
+  - "paris"
+  - "amsterdam"
+  - "berlin"
+  - "dublin"
+  - "zurich"
+  - "stockholm"
+  - "barcelona"
+  - "madrid"
+  - "milan"
+  - "frankfurt"
+  - "munich"
+  - "warsaw"
+  # Canada
+  - "toronto"
+  - "vancouver"
+  - "montreal"
+  - "canada"
+  # Asia / Pacific
+  - "singapore"
+  - "hong kong"
+  - "tokyo"
+  - "sydney"
+  - "melbourne"
+  - "bangalore"
+  - "hyderabad"
+  - "mumbai"
+  - "india"
+  - "china"
+  - "beijing"
+  - "shanghai"
+  # Latin America
+  - "mexico city"
+  - "sao paulo"
+  - "bogota"
+  # Middle East / Africa
+  - "dubai"
+  - "tel aviv"
+  - "johannesburg"
+
+# ── Experience level filters ─────────────────────────────────────
+# Drop if JD body contains phrases implying 3+ YOE as a hard minimum.
+experience_exclude_patterns:
+  - "\\b[3-9]\\+?\\s*(?:years?|yrs?)\\s+(?:of\\s+)?(?:experience|exp\\.?)"
+  - "\\b1[0-9]\\+?\\s*years?"
+  - "minimum\\s+[3-9]\\s*years?"
+  - "at least\\s+[3-9]\\s*years?"
+
+# ── Sponsorship filter ────────────────────────────────────────────
+# Hidden filter — never output sponsorship info to the sheet.
+# Drop if the JD body contains ANY of these phrases.
+no_sponsorship_patterns:
+  - "will not sponsor"
+  - "unable to sponsor"
+  - "cannot sponsor"
+  - "does not sponsor"
+  - "sponsorship not available"
+  - "no sponsorship"
+  - "not eligible for sponsorship"
+  - "we do not provide sponsorship"
+
+# ── Salary filter ─────────────────────────────────────────────────
+salary_max_usd: 120000     # drop only if CLEARLY above this
+# "clearly above" = salary_min > salary_max_usd
+# if salary is missing → keep
+# if range straddles threshold → keep for manual review
+
+# ── Priority scoring weights ──────────────────────────────────────
+# Final score = sum of applicable weights (0–100)
+scoring:
+  company_priority_1: 30    # company.priority == 1
+  company_priority_2: 15    # company.priority == 2
+  company_priority_3:  5    # company.priority == 3
+
+  title_exact:   30         # title exactly matches a target title
+  title_partial: 18         # title contains a target keyword
+  title_adjacent: 6
+
+  location_nyc:  20         # location explicitly NYC / NY
+  location_remote: 8        # remote / hybrid
+
+  salary_in_range:  10      # salary exists and clearly ≤ threshold
+  salary_missing:    5      # no salary info — neutral
+
+  experience_junior: 10     # JD mentions 0–2 YOE or "entry" / "new grad"
+
+# Score → bucket mapping
+priority_buckets:
+  high:   70      # score ≥ 70
+  medium: 40      # 40 ≤ score < 70
+  # below 40 → Low
+
+# ── Request config ────────────────────────────────────────────────
+http:
+  timeout_seconds: 15
+  retry_attempts: 3
+  retry_backoff_factor: 1.5
+  user_agent: "Mozilla/5.0 (compatible; JobBot/1.0)"
+
+# ── Deduplication ─────────────────────────────────────────────────
+dedupe:
+  # Fields used to build the stable composite key
+  key_fields:
+    - company_normalized
+    - title_normalized
+    - posting_url
+  # Fallback if URL is missing: use ats_job_id
+  fallback_key_field: ats_job_id
