@@ -12,16 +12,12 @@
 name: Daily Job Fetch
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: "0 8 * * *"      # 08:00 UTC = 04:00 ET (03:00 EDT)
-  workflow_dispatch:          # manual trigger from Actions tab
-    inputs:
-      dry_run:
-        description: "Dry run (fetch but don't write to sheet)"
-        required: false
-        default: "false"
-        type: choice
-        options: ["true", "false"]
+    - cron: '7 9 * * *'
+      timezone: 'America/New_York'
+    - cron: '7 21 * * *'
+      timezone: 'America/New_York'
 
 jobs:
   fetch-jobs:
