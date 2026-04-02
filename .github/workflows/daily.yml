@@ -14,9 +14,9 @@ name: Daily Job Fetch
 on:
   workflow_dispatch:
   schedule:
-    - cron: '7 9 * * *'
+    - cron: '7 8 * * *'
       timezone: 'America/New_York'
-    - cron: '7 21 * * *'
+    - cron: '7 20 * * *'
       timezone: 'America/New_York'
 
 jobs:
