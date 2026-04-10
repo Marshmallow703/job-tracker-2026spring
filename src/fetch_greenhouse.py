@@ -66,7 +66,7 @@ def _location_ok(location: str, rules: dict) -> bool:
     loc = location.lower()
     for ex in rules.get("location_exclude_strict", []):
         if ex.lower() in loc:
-            # Drop unless there is also a US/include signal in the same string
+            # Check if also an NYC signal (e.g. "New York / Remote")
             for inc in rules.get("location_include", []):
                 if inc.lower() in loc:
                     return True
@@ -74,7 +74,7 @@ def _location_ok(location: str, rules: dict) -> bool:
     for inc in rules.get("location_include", []):
         if inc.lower() in loc:
             return True
-    return False  # location present but no US signal → drop
+    return True  # unknown → keep
 
 
 # ── Main fetcher ─────────────────────────────────────────────────────────────
