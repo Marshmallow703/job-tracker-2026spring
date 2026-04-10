@@ -2,41 +2,63 @@
 # rules.yaml  —  centralised filter + scoring configuration
 # Edit here first before touching any Python.
 # ─────────────────────────────────────────────────────────────────
-
+ 
 # ── Target job titles ─────────────────────────────────────────────
 # Regex fragments matched case-insensitively against the full title.
 # A job passes if ANY pattern matches.
 target_title_patterns:
+  # ── Core FP&A titles ──────────────────────────────────────────
   - "fp&a"
   - "fp & a"
+  - "\\bfpa\\b"
   - "financial planning"
+  - "planning.{0,20}analyst"         # "planning & analysis analyst" etc.
+ 
+  # ── Financial Analyst variants ────────────────────────────────
   - "financial analyst"
   - "finance analyst"
+  - "junior.{0,15}(?:financial|finance).{0,10}analyst"
+ 
+  # ── Strategic / Corporate Finance ────────────────────────────
   - "strategic finance"
-  - "business finance"
-  - "commercial finance"
+  - "finance.{0,10}strategy"
+  - "finance & strategy"
+  - "finance and strategy"
   - "corporate finance"
+  - "business finance"
+ 
+  # ── Revenue / Commercial / Pricing ───────────────────────────
+  # Resume signals: revenue mix, pricing models, scenario projections
+  - "revenue analyst"
   - "revenue finance"
+  - "commercial finance"
+  - "pricing analyst"
+  - "revenue.{0,10}analyst"
+ 
+  # ── Budget / Reporting ────────────────────────────────────────
+  # Resume signals: Budgeting & Forecasting (professional skill),
+  # Event Budgeting & P&L (NYB bullet), CAC/LTV scenario models (Grammarly project)
+  - "budget analyst"
+  - "budget.{0,15}analyst"
+  - "\\bbudget\\b.{0,20}\\banalyst\\b"
+ 
+  # ── Operations Finance ────────────────────────────────────────
   - "finance operations"
   - "client finance"
   - "finance associate"
-  - "planning.{0,20}analyst"         # "planning & analysis analyst" etc.
-  - "\\bfpa\\b"
-  - "\\banalyst\\b.{0,10}finance"    # "Analyst, Finance"
-  - "corporate planning"
-  - "revenue operations"
-  - "reporting analyst"
-  - "commercial analyst"
-  - "pricing analyst"
-  - "strategy.{0,10}operations.{0,10}analyst"
-  - "business operations analyst"
-
+ 
+  # ── Investment / Growth adjacent ─────────────────────────────
+  # Resume signals: ZT PE ($140M deal, LBO/DCF), Grammarly + Duolingo projects
+  - "investment analyst"
+  - "growth finance"
+  - "finance & accounting analyst"    # some companies use this as FP&A equivalent
+ 
 # Title scoring weights (additive; capped at 40 in score.py)
 title_score:
   exact_target: 40          # title is a direct target title
   partial_target: 25        # title contains a target keyword
   adjacent: 10              # "operations analyst", "business analyst" etc.
-
+ 
 # ── Title exclusions ─────────────────────────────────────────────
 # If ANY pattern below matches the title → job is dropped.
 title_exclude_patterns:
@@ -50,27 +72,27 @@ title_exclude_patterns:
   - "\\bhead of\\b"
   - "\\bprincipal\\b"
   - "\\bstaff\\b"
-  - "accounting"
+  # "accounting" alone NOT excluded — "Finance & Accounting Analyst" is a valid FP&A title
+  - "\\baccountant\\b"           # Staff Accountant, Accountant I — pure bookkeeping
+  - "\\baccounting analyst\\b"   # pure GL/reconciliation roles
+  - "\\baccounting manager\\b"
+  - "general ledger"
   - "\\bcontroller\\b"
-  - "\\btax\\b"
+  - "\\btax analyst\\b"
+  - "\\btax associate\\b"
   - "\\baudit\\b"
-  - "\\baccountant\\b"
   - "payroll"
   - "accounts payable"
   - "accounts receivable"
   - "bookkeeping"
-
+ 
 # ── Location matching ─────────────────────────────────────────────
 # Job passes if location contains ANY of these (case-insensitive).
 # Missing location = keep for manual review.
-# Jobs with a non-empty location matching NONE of these are dropped
-# (fetchers return False at end of _location_ok for unknown locations).
 location_include:
-  # NYC metro
   - "new york"
   - "nyc"
   - "ny,"          # catches "Brooklyn, NY" patterns
-  - ", ny"         # catches "New York, NY"
   - "ny "
   - "manhattan"
   - "brooklyn"
@@ -78,23 +100,11 @@ location_include:
   - "bronx"
   - "hoboken"
   - "jersey city"
-  # Broader US cities / state abbreviations
-  - "united states"
-  - "usa"
-  - "u.s.a"
-  - "u.s."
-  - ", ca"
-  - ", tx"
-  - ", wa"
-  - ", il"
-  - ", ma"
-  - ", ga"
-  - ", co"
-  - ", fl"
-  - ", pa"
-  - ", va"
-  - ", nc"
-  - ", az"
+  - "remote"       # keep remote roles — Helen can filter
+  - "hybrid"
+ 
+# Drop jobs whose location explicitly matches these (no NYC signal at all)
+location_exclude_strict:
   - "san francisco"
   - "seattle"
   - "austin"
@@ -105,60 +115,10 @@ location_include:
   - "atlanta"
   - "dallas"
   - "miami"
-  - "washington, d.c"
-  - "washington dc"
-  - "philadelphia"
-  # Remote/hybrid — non-US remote is caught by location_exclude_strict below
-  - "remote"
-  - "hybrid"
-
-# Drop if location contains any of these and no location_include match.
-# Non-US locations only — US cities moved to location_include above.
-location_exclude_strict:
-  # UK / Europe
   - "london"
-  - "united kingdom"
-  - " uk"
-  - "england"
-  - "paris"
-  - "amsterdam"
-  - "berlin"
-  - "dublin"
-  - "zurich"
-  - "stockholm"
-  - "barcelona"
-  - "madrid"
-  - "milan"
-  - "frankfurt"
-  - "munich"
-  - "warsaw"
-  # Canada
   - "toronto"
-  - "vancouver"
-  - "montreal"
-  - "canada"
-  # Asia / Pacific
   - "singapore"
-  - "hong kong"
-  - "tokyo"
-  - "sydney"
-  - "melbourne"
-  - "bangalore"
-  - "hyderabad"
-  - "mumbai"
-  - "india"
-  - "china"
-  - "beijing"
-  - "shanghai"
-  # Latin America
-  - "mexico city"
-  - "sao paulo"
-  - "bogota"
-  # Middle East / Africa
-  - "dubai"
-  - "tel aviv"
-  - "johannesburg"
-
+ 
 # ── Experience level filters ─────────────────────────────────────
 # Drop if JD body contains phrases implying 3+ YOE as a hard minimum.
 experience_exclude_patterns:
@@ -166,7 +126,7 @@ experience_exclude_patterns:
   - "\\b1[0-9]\\+?\\s*years?"
   - "minimum\\s+[3-9]\\s*years?"
   - "at least\\s+[3-9]\\s*years?"
-
+ 
 # ── Sponsorship filter ────────────────────────────────────────────
 # Hidden filter — never output sponsorship info to the sheet.
 # Drop if the JD body contains ANY of these phrases.
@@ -179,45 +139,52 @@ no_sponsorship_patterns:
   - "no sponsorship"
   - "not eligible for sponsorship"
   - "we do not provide sponsorship"
-
+  - "must be authorized to work"
+  - "must be legally authorized"
+  - "must have authorization to work"
+  - "must have unrestricted authorization"
+  - "citizens or permanent residents only"
+  - "green card holders only"
+  - "no visa support"
+ 
 # ── Salary filter ─────────────────────────────────────────────────
-salary_max_usd: 120000     # drop only if CLEARLY above this
+salary_max_usd: 100000     # drop only if CLEARLY above this
 # "clearly above" = salary_min > salary_max_usd
 # if salary is missing → keep
 # if range straddles threshold → keep for manual review
-
+ 
 # ── Priority scoring weights ──────────────────────────────────────
 # Final score = sum of applicable weights (0–100)
 scoring:
   company_priority_1: 30    # company.priority == 1
   company_priority_2: 15    # company.priority == 2
   company_priority_3:  5    # company.priority == 3
-
+ 
   title_exact:   30         # title exactly matches a target title
   title_partial: 18         # title contains a target keyword
   title_adjacent: 6
-
+ 
   location_nyc:  20         # location explicitly NYC / NY
   location_remote: 8        # remote / hybrid
-
+ 
   salary_in_range:  10      # salary exists and clearly ≤ threshold
   salary_missing:    5      # no salary info — neutral
-
+ 
   experience_junior: 10     # JD mentions 0–2 YOE or "entry" / "new grad"
-
+ 
 # Score → bucket mapping
 priority_buckets:
   high:   70      # score ≥ 70
   medium: 40      # 40 ≤ score < 70
   # below 40 → Low
-
+ 
 # ── Request config ────────────────────────────────────────────────
 http:
   timeout_seconds: 15
   retry_attempts: 3
   retry_backoff_factor: 1.5
   user_agent: "Mozilla/5.0 (compatible; JobBot/1.0)"
-
+ 
 # ── Deduplication ─────────────────────────────────────────────────
 dedupe:
   # Fields used to build the stable composite key
